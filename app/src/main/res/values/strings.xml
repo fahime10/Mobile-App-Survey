@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SurveyApplication</string>
+    <string name="prompt">Please select the correct options to get started</string>
+    <string name="student_only">Note: this is for student registration only</string>
+</resources>
