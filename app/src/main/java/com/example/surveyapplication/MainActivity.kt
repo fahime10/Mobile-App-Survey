@@ -8,10 +8,7 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
-import com.example.surveyapplication.Model.DatabaseHelper
-import com.example.surveyapplication.Model.Student
-import com.example.surveyapplication.Model.Survey
-import com.example.surveyapplication.Model.SurveyList
+import com.example.surveyapplication.Model.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,9 +46,15 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Username or password incorrect...", Toast.LENGTH_LONG).show()
                 }
             } else if (clearance.text.toString() == "I am admin") {
-                Toast.makeText(this, "Sign in successful!", Toast.LENGTH_LONG).show()
-                val adminSignIn = Intent(this, AdminSignIn::class.java)
-                startActivity(adminSignIn)
+                val result = dbHelper.retrieveAdmin(Admin(-1, username, password))
+
+                if (result) {
+                    Toast.makeText(this, "Sign in successful!", Toast.LENGTH_LONG).show()
+                    val adminSignIn = Intent(this, AdminSignIn::class.java)
+                    startActivity(adminSignIn)
+                } else {
+                    Toast.makeText(this, "Username or password incorrect...", Toast.LENGTH_LONG).show()
+                }
             } else {
                 Toast.makeText(this, "Please select student or admin!",
                                 Toast.LENGTH_LONG).show()

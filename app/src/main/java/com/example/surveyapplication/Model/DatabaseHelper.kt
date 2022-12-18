@@ -51,7 +51,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
     private val StudentSurveyAnswerTableName = "StudentSurveyAnswer"
     private val StudentSurveyAnswer_Id = "StudentSurveyAnswerId"
     private val StudentSurveyStudent_Id = "StudentId"
-    private val StudentSurveyPublishedSurvey_Id = "PublishedSurveyId"
     private val StudentSurveyQuestion_Id = "QuestionId"
     private val StudentSurveyAnswerKey_Id = "AnswerId"
     /*===========================================*/
@@ -155,6 +154,34 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         return found;
     }
 
+    fun retrieveAdmin(admin: Admin): Boolean {
+        var found = false
+
+        val db: SQLiteDatabase = this.readableDatabase
+
+        val adminLogin = admin.username
+        val password = admin.password
+
+        val sqlQuery = "SELECT * FROM $AdminTableName " +
+                "WHERE $Admin_Login = ? " +
+                "AND $Admin_Password = ?"
+
+        val arrayParameters = arrayOf(adminLogin, password)
+
+        val cursor: Cursor = db.rawQuery(sqlQuery, arrayParameters)
+
+        if (cursor.moveToFirst()) {
+            found = true
+            cursor.close()
+            db.close()
+        }
+
+        cursor.close()
+        db.close()
+        return found
+    }
+
+
     fun retrieveAllSurveys(): ArrayList<Survey> {
 
         val surveyList = ArrayList<Survey>()
@@ -227,5 +254,22 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         }
 
         return answerList
+    }
+
+    fun storeAllAnswers(answerList: ArrayList<Answer>, studentId: Int, questionId: Array<Int>) {
+        if (answerList.size == 10) {
+            for (i in 1..answerList.size) {
+                val db: SQLiteDatabase = this.writableDatabase
+                val cv: ContentValues = ContentValues()
+
+                cv.put(StudentSurveyStudent_Id, studentId)
+                cv.put(StudentSurveyQuestion_Id, questionId[i])
+                cv.put(StudentSurveyAnswerKey_Id, answerList[i].id)
+
+                db.insert(StudentSurveyAnswerTableName, null, cv)
+
+                db.close()
+            }
+        }
     }
 }
