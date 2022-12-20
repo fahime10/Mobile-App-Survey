@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SurveyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".ViewQuestions"
+            android:name=".Controller.ViewQuestions"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -27,21 +27,21 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".AdminSignIn"
+            android:name=".Controller.AdminSignIn"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".StudentSignIn"
+            android:name=".Controller.StudentSignIn"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".RegisterUser"
+            android:name=".Controller.RegisterUser"
             android:exported="true"
             android:parentActivityName=".MainActivity">
             <meta-data

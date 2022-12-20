@@ -1,4 +1,4 @@
-package com.example.surveyapplication
+package com.example.surveyapplication.Controller
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.*
 import com.example.surveyapplication.Model.Answer
 import com.example.surveyapplication.Model.DatabaseHelper
-import com.example.surveyapplication.Model.Question
 import com.example.surveyapplication.Model.QuestionList
+import com.example.surveyapplication.R
 
 class ViewQuestions : AppCompatActivity() {
 

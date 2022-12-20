@@ -1,10 +1,14 @@
-package com.example.surveyapplication
+package com.example.surveyapplication.Controller
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ListView
+import com.example.surveyapplication.MainActivity
 import com.example.surveyapplication.Model.CustomAdapter
 import com.example.surveyapplication.Model.SurveyList
+import com.example.surveyapplication.R
 
 class AdminSignIn : AppCompatActivity() {
 
@@ -28,5 +32,19 @@ class AdminSignIn : AppCompatActivity() {
             surveyId = surveyList.getSurveyId(id.toInt())
         }
 
+    }
+
+    fun createSurvey(view: View) {
+
+    }
+
+    fun updateSurvey(view: View) {
+
+    }
+
+    fun signOut(view: View) {
+        finish()
+        val mainPage = Intent(this, MainActivity::class.java)
+        startActivity(mainPage)
     }
 }

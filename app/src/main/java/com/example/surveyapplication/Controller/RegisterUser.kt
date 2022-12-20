@@ -1,4 +1,4 @@
-package com.example.surveyapplication
+package com.example.surveyapplication.Controller
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import com.example.surveyapplication.MainActivity
 import com.example.surveyapplication.Model.DatabaseHelper
 import com.example.surveyapplication.Model.Student
+import com.example.surveyapplication.R
 
 class RegisterUser : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

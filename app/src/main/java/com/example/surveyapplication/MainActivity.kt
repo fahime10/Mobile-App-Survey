@@ -8,6 +8,9 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import com.example.surveyapplication.Controller.AdminSignIn
+import com.example.surveyapplication.Controller.RegisterUser
+import com.example.surveyapplication.Controller.StudentSignIn
 import com.example.surveyapplication.Model.*
 
 class MainActivity : AppCompatActivity() {
