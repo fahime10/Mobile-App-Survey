@@ -35,7 +35,8 @@ class AdminSignIn : AppCompatActivity() {
     }
 
     fun createSurvey(view: View) {
-
+        val createSurveyActivity = Intent(this, CreateSurvey::class.java)
+        startActivity(createSurveyActivity)
     }
 
     fun updateSurvey(view: View) {
