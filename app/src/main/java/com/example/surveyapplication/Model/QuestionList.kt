@@ -31,4 +31,12 @@ class QuestionList(context: Context, surveyId: Int) : Serializable {
     fun setQuestionList(list: ArrayList<Question>) {
         questionList = list
     }
+
+    fun addQuestion(question: Question) {
+        questionList.add(question)
+    }
+
+    fun getQuestionId(position: Int): Int {
+        return questionList[position].id
+    }
 }

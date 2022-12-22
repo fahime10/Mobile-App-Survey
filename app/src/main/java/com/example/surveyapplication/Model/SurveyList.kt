@@ -3,6 +3,8 @@ package com.example.surveyapplication.Model
 import android.content.Context
 import java.io.Serializable
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Date
 
 class SurveyList(context: Context) : Serializable {
@@ -32,21 +34,5 @@ class SurveyList(context: Context) : Serializable {
 
     fun getSurveyId(position: Int): Int {
         return surveyList[position].id
-    }
-
-    fun getSurveyStartDate(position: Int): Date {
-        val dateStr = surveyList[position].startDate
-        val formatter = SimpleDateFormat("dd/MM/yyyy")
-        return formatter.parse(dateStr)
-    }
-
-    fun getSurveyEndDate(position: Int): Date {
-        val dateStr = surveyList[position].endDate
-        val formatter = SimpleDateFormat("dd/MM/yyyy")
-        return formatter.parse(dateStr)
-    }
-
-    fun setSurveyList(surveys: ArrayList<Survey>) {
-        surveyList = surveys
     }
 }

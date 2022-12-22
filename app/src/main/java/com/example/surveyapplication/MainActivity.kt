@@ -41,22 +41,26 @@ class MainActivity : AppCompatActivity() {
             if (clearance.text.toString() == "I am student") {
                 val result = dbHelper.retrieveStudent(Student(-1, username, password))
 
-                if (result) {
-                    Toast.makeText(this, "Sign in successful!", Toast.LENGTH_LONG).show()
+                if (result != 0) {
+                    Toast.makeText(this, "Student sign in successful!",
+                                    Toast.LENGTH_LONG).show()
                     val studentSignIn = Intent(this, StudentSignIn::class.java)
+                    studentSignIn.putExtra("studentId", result)
                     startActivity(studentSignIn)
                 } else {
-                    Toast.makeText(this, "Username or password incorrect...", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Username or password incorrect...",
+                                    Toast.LENGTH_LONG).show()
                 }
             } else if (clearance.text.toString() == "I am admin") {
                 val result = dbHelper.retrieveAdmin(Admin(-1, username, password))
 
                 if (result) {
-                    Toast.makeText(this, "Sign in successful!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Admin sign in successful!", Toast.LENGTH_LONG).show()
                     val adminSignIn = Intent(this, AdminSignIn::class.java)
                     startActivity(adminSignIn)
                 } else {
-                    Toast.makeText(this, "Username or password incorrect...", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Username or password incorrect...",
+                                    Toast.LENGTH_LONG).show()
                 }
             } else {
                 Toast.makeText(this, "Please select student or admin!",

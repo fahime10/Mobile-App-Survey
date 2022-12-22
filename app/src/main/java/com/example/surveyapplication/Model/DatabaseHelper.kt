@@ -32,6 +32,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
     private val SurveyTableName = "Survey"
     private val Survey_Id = "SurveyId"
     private val Survey_Title = "SurveyTitle"
+    private val Survey_StarDate = "StartDate"
+    private val Survey_EndDate = "EndDate"
     /*===========================================*/
 
     /* Question table */
@@ -128,8 +130,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         }
     }
 
-    fun retrieveStudent(student: Student): Boolean {
-        var found = false
+    fun retrieveStudent(student: Student): Int {
+        var found = 0
 
         val db: SQLiteDatabase = this.readableDatabase
 
@@ -145,7 +147,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         val cursor: Cursor = db.rawQuery(sqlQuery, arrayParameters)
 
         if (cursor.moveToFirst()) {
-            found = true
+            found = cursor.getInt(0)
             cursor.close()
             db.close()
         }
@@ -256,20 +258,50 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         return answerList
     }
 
-    fun storeAllAnswers(answerList: ArrayList<Answer>, studentId: Int, questionId: Array<Int>) {
-        if (answerList.size == 10) {
-            for (i in 1..answerList.size) {
-                val db: SQLiteDatabase = this.writableDatabase
-                val cv: ContentValues = ContentValues()
+    fun storeAllAnswers(answers: ArrayList<StudentSurveyAnswer>) {
+        val db: SQLiteDatabase = this.writableDatabase
+        val cv: ContentValues = ContentValues()
 
-                cv.put(StudentSurveyStudent_Id, studentId)
-                cv.put(StudentSurveyQuestion_Id, questionId[i])
-                cv.put(StudentSurveyAnswerKey_Id, answerList[i].id)
+        for (i in 0 until answers.size) {
+            cv.put(StudentSurveyStudent_Id, answers[i].studentId)
+            cv.put(StudentSurveyQuestion_Id, answers[i].questionId)
+            cv.put(StudentSurveyAnswerKey_Id, answers[i].answerId)
 
-                db.insert(StudentSurveyAnswerTableName, null, cv)
-
-                db.close()
-            }
+            db.insert(StudentSurveyAnswerTableName, null, cv)
         }
+
+        db.close()
+    }
+
+    fun addNewSurvey(survey: Survey) {
+        val db: SQLiteDatabase = this.writableDatabase
+        val cv: ContentValues = ContentValues()
+
+        cv.put(Survey_Title, survey.title)
+        cv.put(Survey_StarDate, survey.startDate)
+        cv.put(Survey_EndDate, survey.endDate)
+
+        db.insert(SurveyTableName, null, cv)
+
+        db.close()
+    }
+
+    fun retrieveLastSurveyId(): Int {
+        var lastSurveyId = 0
+
+        val db:SQLiteDatabase = this.readableDatabase
+
+        val sqlQuery = "SELECT max($Survey_Id) from $SurveyTableName"
+
+        val cursor: Cursor = db.rawQuery(sqlQuery, null)
+
+        if (cursor.moveToFirst()) {
+            lastSurveyId = cursor.getInt(0)
+        }
+
+        cursor.close()
+        db.close()
+
+        return lastSurveyId
     }
 }

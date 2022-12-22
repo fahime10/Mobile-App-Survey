@@ -9,22 +9,25 @@ import android.widget.*
 import com.example.surveyapplication.Model.Answer
 import com.example.surveyapplication.Model.DatabaseHelper
 import com.example.surveyapplication.Model.QuestionList
+import com.example.surveyapplication.Model.StudentSurveyAnswer
 import com.example.surveyapplication.R
 
 class ViewQuestions : AppCompatActivity() {
 
     private lateinit var questions: QuestionList
     private lateinit var answers: ArrayList<Answer>
+    private var studentSurveyAnswers: ArrayList<StudentSurveyAnswer> = ArrayList()
+    private var studentId = 0
     private val dbHelper: DatabaseHelper = DatabaseHelper(this)
 
     var index = 0
 
-    @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_questions)
 
         val surveyId = intent.getIntExtra("surveyId", 0)
+        studentId = intent.getIntExtra("studentId", 0)
 
         questions = QuestionList(this, surveyId)
 
@@ -33,8 +36,7 @@ class ViewQuestions : AppCompatActivity() {
         answers = dbHelper.retrieveAllAnswers()
 
         findViewById<RadioButton>(R.id.a1).text = answers[0].answerText
-        val answer = findViewById<RadioButton>(R.id.a1)
-        answer.isChecked = true
+        findViewById<RadioButton>(R.id.a1).isChecked = true
         findViewById<RadioButton>(R.id.a2).text = answers[1].answerText
         findViewById<RadioButton>(R.id.a3).text = answers[2].answerText
         findViewById<RadioButton>(R.id.a4).text = answers[3].answerText
@@ -44,15 +46,31 @@ class ViewQuestions : AppCompatActivity() {
     fun next(view: View) {
         val answerRadioGroup = findViewById<RadioGroup>(R.id.answerGroup)
         val answer = findViewById<RadioButton>(answerRadioGroup.checkedRadioButtonId)
-        if (index + 1 < questions.getCount() && answer.isChecked) {
+        if (index + 1 < questions.getCount()) {
             if (index == questions.getCount()-2) {
                 findViewById<Button>(R.id.next).text = "Finish"
             }
+
+            val answerId = when(answer.text.toString()) {
+                "Strongly Agree" -> 1
+                "Agree" -> 2
+                "Neither agree nor disagree" -> 3
+                "Disagree" -> 4
+                "Strongly disagree" -> 5
+                else -> 0
+            }
+
+            val surveyAnswer = StudentSurveyAnswer(-1, studentId,
+                                                    questions.getQuestionId(index), answerId)
+
+            studentSurveyAnswers.add(surveyAnswer)
+
             index++
             findViewById<TextView>(R.id.question).text = questions.getQuestion(index).questionText
         } else {
             Toast.makeText(this, "Thank you for completing the survey",
                             Toast.LENGTH_LONG).show()
+            dbHelper.storeAllAnswers(studentSurveyAnswers)
             finish()
             val studentSignIn = Intent(this, StudentSignIn::class.java)
             startActivity(studentSignIn)
@@ -61,12 +79,13 @@ class ViewQuestions : AppCompatActivity() {
 
     fun previous(view: View) {
         if (index - 1 >= 0) {
+            studentSurveyAnswers.removeLast()
             index--
             if (index < questions.getCount()-1) {
                 findViewById<Button>(R.id.next).text = "Next"
             }
-                findViewById<TextView>(R.id.question).text =
-                    questions.getQuestion(index).questionText
+            findViewById<TextView>(R.id.question).text =
+                questions.getQuestion(index).questionText
         }
     }
 }

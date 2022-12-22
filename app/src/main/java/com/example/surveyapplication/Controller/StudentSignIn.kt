@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ListView
+import android.widget.Toast
 import com.example.surveyapplication.MainActivity
 import com.example.surveyapplication.Model.*
 import com.example.surveyapplication.R
@@ -15,15 +16,35 @@ import java.time.format.DateTimeFormatter
 
 class StudentSignIn : AppCompatActivity() {
 
-    lateinit var listView: ListView
-    lateinit var surveyList: SurveyList
+    private lateinit var listView: ListView
+    private lateinit var surveyList: SurveyList
     private var surveyId: Int = 0
+    var studentId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_sign_in)
 
+        studentId = intent.getIntExtra("studentId", 0)
+
         surveyList = SurveyList(this)
+
+        val date = LocalDate.now()
+        val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val str = date.format(dateFormatter)
+        val formatter = SimpleDateFormat("dd/MM/yyyy")
+        val formattedDate = formatter.parse(str)
+
+        val surveysToRemove = ArrayList<Survey>()
+
+        surveyList.getSurveyList().forEach { survey ->
+            if (survey.getSurveyStartDate() > formattedDate ||
+                survey.getSurveyEndDate() < formattedDate) {
+                surveysToRemove.add(survey)
+            }
+        }
+
+        surveyList.getSurveyList().removeAll(surveysToRemove)
 
         val customAdapter = CustomAdapter(applicationContext, surveyList)
 
@@ -34,30 +55,13 @@ class StudentSignIn : AppCompatActivity() {
         listView.setOnItemClickListener { parent, view, position, id ->
             surveyId = surveyList.getSurveyId(id.toInt())
         }
-
     }
 
     fun selectSurvey(view: View) {
-        var idPosition: Int = 0
-
-        for (i in 0 until surveyList.getCount()) {
-            if (surveyList.getSurveyId(i) == surveyId) {
-                idPosition = i
-            }
-        }
-
-        val date = LocalDate.now()
-        val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val str = date.format(dateFormatter)
-        val formatter = SimpleDateFormat("dd/MM/yyyy")
-        val formattedDate = formatter.parse(str)
-        val startDate = surveyList.getSurveyStartDate(idPosition)
-        val endDate = surveyList.getSurveyEndDate(idPosition)
-        if (formattedDate > startDate && endDate > formattedDate) {
-            val startSurvey = Intent(this, ViewQuestions::class.java)
-            startSurvey.putExtra("surveyId", surveyId)
-            startActivity(startSurvey)
-        }
+        val startSurvey = Intent(this, ViewQuestions::class.java)
+        startSurvey.putExtra("surveyId", surveyId)
+        startSurvey.putExtra("studentId", studentId)
+        startActivity(startSurvey)
     }
 
     fun signOut(view: View) {
