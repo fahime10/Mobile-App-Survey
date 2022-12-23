@@ -52,9 +52,10 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
     /* Student Survey Answer table */
     private val StudentSurveyAnswerTableName = "StudentSurveyAnswer"
     private val StudentSurveyAnswer_Id = "StudentSurveyAnswerId"
-    private val StudentSurveyStudent_Id = "StudentId"
-    private val StudentSurveyQuestion_Id = "QuestionId"
-    private val StudentSurveyAnswerKey_Id = "AnswerId"
+    private val StudentSurveyAnswer_StudentId = "StudentId"
+    private val StudentSurveyAnswer_SurveyId = "SurveyId"
+    private val StudentSurveyAnswer_QuestionId = "QuestionId"
+    private val StudentSurveyAnswer_AnswerId = "AnswerId"
     /*===========================================*/
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -185,7 +186,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
 
 
     fun retrieveAllSurveys(): ArrayList<Survey> {
-
         val surveyList = ArrayList<Survey>()
         val db: SQLiteDatabase = this.readableDatabase
         val sqlQuery = "SELECT * FROM $SurveyTableName"
@@ -206,6 +206,28 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
             db.close()
         }
         return surveyList
+    }
+
+    fun checkCompletedSurveys(studentId: Int): ArrayList<Int> {
+        val completedSurveys = ArrayList<Int>()
+        val db: SQLiteDatabase = this.readableDatabase
+
+        val sqlQuery = "SELECT $StudentSurveyAnswer_SurveyId " +
+                        "FROM $StudentSurveyAnswerTableName " +
+                        "WHERE $StudentSurveyAnswer_StudentId = $studentId"
+
+        val cursor : Cursor = db.rawQuery(sqlQuery, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val surveyId : Int = cursor.getInt(0)
+                completedSurveys.add(surveyId)
+            } while (cursor.moveToNext())
+
+            cursor.close()
+            db.close()
+        }
+        return completedSurveys
     }
 
     fun retrieveAllQuestions(surveyId: Int): ArrayList<Question> {
@@ -262,10 +284,11 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         val db: SQLiteDatabase = this.writableDatabase
         val cv: ContentValues = ContentValues()
 
-        for (i in 0 until answers.size) {
-            cv.put(StudentSurveyStudent_Id, answers[i].studentId)
-            cv.put(StudentSurveyQuestion_Id, answers[i].questionId)
-            cv.put(StudentSurveyAnswerKey_Id, answers[i].answerId)
+        answers.forEach { answer ->
+            cv.put(StudentSurveyAnswer_StudentId, answer.studentId)
+            cv.put(StudentSurveyAnswer_SurveyId, answer.surveyId)
+            cv.put(StudentSurveyAnswer_QuestionId, answer.questionId)
+            cv.put(StudentSurveyAnswer_AnswerId, answer.answerId)
 
             db.insert(StudentSurveyAnswerTableName, null, cv)
         }

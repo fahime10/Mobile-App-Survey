@@ -18,6 +18,7 @@ class ViewQuestions : AppCompatActivity() {
     private lateinit var answers: ArrayList<Answer>
     private var studentSurveyAnswers: ArrayList<StudentSurveyAnswer> = ArrayList()
     private var studentId = 0
+    private var surveyId = 0
     private val dbHelper: DatabaseHelper = DatabaseHelper(this)
 
     var index = 0
@@ -26,7 +27,7 @@ class ViewQuestions : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_questions)
 
-        val surveyId = intent.getIntExtra("surveyId", 0)
+        surveyId = intent.getIntExtra("surveyId", 0)
         studentId = intent.getIntExtra("studentId", 0)
 
         questions = QuestionList(this, surveyId)
@@ -46,13 +47,13 @@ class ViewQuestions : AppCompatActivity() {
     fun next(view: View) {
         val answerRadioGroup = findViewById<RadioGroup>(R.id.answerGroup)
         val answer = findViewById<RadioButton>(answerRadioGroup.checkedRadioButtonId)
-        if (index + 1 < questions.getCount()) {
-            if (index == questions.getCount()-2) {
+        if (index + 1 <= questions.getQuestionList().size) {
+            if (index == questions.getQuestionList().size-1) {
                 findViewById<Button>(R.id.next).text = "Finish"
             }
 
-            val answerId = when(answer.text.toString()) {
-                "Strongly Agree" -> 1
+            val answerId = when (answer.text.toString()) {
+                "Strongly agree" -> 1
                 "Agree" -> 2
                 "Neither agree nor disagree" -> 3
                 "Disagree" -> 4
@@ -60,13 +61,16 @@ class ViewQuestions : AppCompatActivity() {
                 else -> 0
             }
 
-            val surveyAnswer = StudentSurveyAnswer(-1, studentId,
+            val surveyAnswer = StudentSurveyAnswer(-1, studentId, surveyId,
                                                     questions.getQuestionId(index), answerId)
 
             studentSurveyAnswers.add(surveyAnswer)
 
             index++
-            findViewById<TextView>(R.id.question).text = questions.getQuestion(index).questionText
+            if (index != 10) {
+                findViewById<TextView>(R.id.question).text =
+                    questions.getQuestion(index).questionText
+            }
         } else {
             Toast.makeText(this, "Thank you for completing the survey",
                             Toast.LENGTH_LONG).show()
@@ -81,7 +85,7 @@ class ViewQuestions : AppCompatActivity() {
         if (index - 1 >= 0) {
             studentSurveyAnswers.removeLast()
             index--
-            if (index < questions.getCount()-1) {
+            if (index < questions.getQuestionList().size-1) {
                 findViewById<Button>(R.id.next).text = "Next"
             }
             findViewById<TextView>(R.id.question).text =

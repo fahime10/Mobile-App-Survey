@@ -32,6 +32,10 @@ class SurveyList(context: Context) : Serializable {
         return surveyList[index]
     }
 
+    fun removeSurvey(survey: Survey) {
+        surveyList.remove(survey)
+    }
+
     fun getSurveyId(position: Int): Int {
         return surveyList[position].id
     }
