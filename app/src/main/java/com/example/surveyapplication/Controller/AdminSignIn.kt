@@ -12,8 +12,9 @@ import com.example.surveyapplication.R
 
 class AdminSignIn : AppCompatActivity() {
 
-    lateinit var listView: ListView
-    lateinit var surveyList: SurveyList
+    private lateinit var listView: ListView
+    private lateinit var surveyList: SurveyList
+    private lateinit var surveyTitle: String
     private var surveyId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +31,8 @@ class AdminSignIn : AppCompatActivity() {
 
         listView.setOnItemClickListener { parent, view, position, id ->
             surveyId = surveyList.getSurveyId(id.toInt())
+            surveyTitle = surveyList.getSurveyTitle(id.toInt())
         }
-
     }
 
     fun createSurvey(view: View) {
@@ -40,7 +41,10 @@ class AdminSignIn : AppCompatActivity() {
     }
 
     fun updateSurvey(view: View) {
-
+        val updateSurveyActivity = Intent(this, UpdateSurvey::class.java)
+        updateSurveyActivity.putExtra("surveyId", surveyId)
+        updateSurveyActivity.putExtra("surveyTitle", surveyTitle)
+        startActivity(updateSurveyActivity)
     }
 
     fun signOut(view: View) {

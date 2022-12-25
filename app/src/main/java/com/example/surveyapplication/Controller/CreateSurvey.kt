@@ -2,6 +2,7 @@ package com.example.surveyapplication.Controller
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -84,7 +85,6 @@ class CreateSurvey : AppCompatActivity() {
         newSurveyId = dbHelper.retrieveLastSurveyId() + 1
     }
 
-
     private fun updateStartDateInView() {
         val format = "dd/MM/yyyy"
         val sdf = SimpleDateFormat(format, Locale.UK)
@@ -121,12 +121,12 @@ class CreateSurvey : AppCompatActivity() {
                 findViewById<Button>(R.id.nextBtn).isEnabled = true
             } else {
                 Toast.makeText(
-                    this, "Please input all information before proceeding",
+                    this, "Please input all correct information before proceeding",
                     Toast.LENGTH_LONG
                 ).show()
             }
             } else {
-            Toast.makeText(this, "Please input all information before proceeding",
+            Toast.makeText(this, "Please input all correct information before proceeding",
                             Toast.LENGTH_LONG).show()
             }
     }
@@ -144,29 +144,38 @@ class CreateSurvey : AppCompatActivity() {
     }
 
     fun nextQuestion(view: View) {
-        if (counter != 10) {
+        if (counter <= 10) {
             val item = findViewById<TextView>(R.id.questionWritten).text.toString()
             if (item != "") {
                 val question = Question(-1, newSurveyId, item)
                 questionTextList.add(question)
                 counter++
                 findViewById<TextView>(R.id.counter).text = counter.toString()
+
                 findViewById<EditText>(R.id.questionWritten).text.clear()
             } else {
-                Toast.makeText(
-                    this, "Question cannot be blank",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(this, "Question cannot be blank", Toast.LENGTH_LONG)
+                    .show()
             }
         }
 
         if (questionTextList.size == 10) {
             dbHelper.addNewSurvey(newSurvey)
-
+            dbHelper.storeAllQuestions(questionTextList)
+            finish()
+            Toast.makeText(this, "New survey successfully added!",
+                            Toast.LENGTH_LONG).show()
+            val adminView = Intent(this, AdminSignIn::class.java)
+            startActivity(adminView)
         }
     }
 
     fun previousQuestion(view: View) {
+        if (counter != 1) {
+            questionTextList.removeLast()
 
+            counter--
+            findViewById<TextView>(R.id.counter).text = counter.toString()
+        }
     }
 }

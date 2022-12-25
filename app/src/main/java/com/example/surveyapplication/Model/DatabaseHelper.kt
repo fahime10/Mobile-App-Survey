@@ -115,7 +115,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         }
 
         val db: SQLiteDatabase = this.writableDatabase
-        val cv: ContentValues = ContentValues()
+        val cv = ContentValues()
 
         cv.put(Student_Login, student.username)
         cv.put(Student_Password, student.password)
@@ -282,7 +282,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
 
     fun storeAllAnswers(answers: ArrayList<StudentSurveyAnswer>) {
         val db: SQLiteDatabase = this.writableDatabase
-        val cv: ContentValues = ContentValues()
+        val cv = ContentValues()
 
         answers.forEach { answer ->
             cv.put(StudentSurveyAnswer_StudentId, answer.studentId)
@@ -298,7 +298,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
 
     fun addNewSurvey(survey: Survey) {
         val db: SQLiteDatabase = this.writableDatabase
-        val cv: ContentValues = ContentValues()
+        val cv = ContentValues()
 
         cv.put(Survey_Title, survey.title)
         cv.put(Survey_StarDate, survey.startDate)
@@ -306,6 +306,46 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
 
         db.insert(SurveyTableName, null, cv)
 
+        db.close()
+    }
+
+    fun updateSurvey(survey: Survey) {
+        val db: SQLiteDatabase = this.writableDatabase
+        val sqlQuery = "UPDATE $SurveyTableName " +
+                        "SET $Survey_Title=${survey.title} " +
+                        "WHERE $Survey_Id = ${survey.id}"
+        val cv = ContentValues()
+
+        cv.put(Survey_Title, survey.title)
+        cv.put(Survey_StarDate, survey.startDate)
+        cv.put(Survey_EndDate, survey.endDate)
+
+        db.update(SurveyTableName, cv,"$Survey_Id = ${survey.id}", null)
+        db.close()
+    }
+
+    fun storeAllQuestions(questions: ArrayList<Question>) {
+        val db: SQLiteDatabase = this.writableDatabase
+        val cv = ContentValues()
+
+        questions.forEach { question ->
+            cv.put(QuestionSurvey_Id, question.surveyId)
+            cv.put(Question_Text, question.questionText)
+
+            db.insert(QuestionTableName, null, cv)
+        }
+        db.close()
+    }
+
+    fun updateQuestions(questions: ArrayList<Question>) {
+        val db: SQLiteDatabase = this.writableDatabase
+        val sqlQuery = "UPDATE $QuestionTableName SET $Question_Text = ? WHERE $Question_Id = ?"
+        val cv = ContentValues()
+
+        questions.forEach { question ->
+            cv.put(Question_Text, question.questionText)
+            db.update(QuestionTableName, cv, "$Question_Id=${question.id}", null)
+        }
         db.close()
     }
 
