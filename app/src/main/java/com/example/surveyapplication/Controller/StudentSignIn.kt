@@ -71,10 +71,15 @@ class StudentSignIn : AppCompatActivity() {
 
 
     fun selectSurvey(view: View) {
-        val startSurvey = Intent(this, ViewQuestions::class.java)
-        startSurvey.putExtra("surveyId", surveyId)
-        startSurvey.putExtra("studentId", studentId)
-        startActivity(startSurvey)
+        if (surveyId != 0) {
+            val startSurvey = Intent(this, ViewQuestions::class.java)
+            startSurvey.putExtra("surveyId", surveyId)
+            startSurvey.putExtra("studentId", studentId)
+            startActivity(startSurvey)
+        } else {
+            Toast.makeText(this, "Please select a survey first!",
+                            Toast.LENGTH_LONG).show()
+        }
     }
 
     fun signOut(view: View) {

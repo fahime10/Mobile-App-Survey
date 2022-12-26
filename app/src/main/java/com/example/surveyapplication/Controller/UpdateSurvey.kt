@@ -156,7 +156,7 @@ class UpdateSurvey : AppCompatActivity() {
 
     fun nextQuestion(view: View) {
         if (questionCounter <= 10) {
-            val item = findViewById<TextView>(R.id.questionText).text.toString()
+            val item = findViewById<TextView>(R.id.newQuestion).text.toString()
             if (item != "") {
                 val questionId = oldQuestions.getQuestionId(index)
                 val question = Question(questionId, surveyId, item)

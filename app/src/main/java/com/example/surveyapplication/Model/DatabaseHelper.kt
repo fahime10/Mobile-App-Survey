@@ -340,20 +340,18 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
     fun updateQuestions(questions: ArrayList<Question>) {
         val db: SQLiteDatabase = this.writableDatabase
         val sqlQuery = "UPDATE $QuestionTableName SET $Question_Text = ? WHERE $Question_Id = ?"
-        val cv = ContentValues()
 
         questions.forEach { question ->
+            val cv = ContentValues()
             cv.put(Question_Text, question.questionText)
-            db.update(QuestionTableName, cv, "$Question_Id=${question.id}", null)
+            db.update(QuestionTableName, cv, "$Question_Id='${question.id}'", null)
         }
         db.close()
     }
 
     fun retrieveLastSurveyId(): Int {
         var lastSurveyId = 0
-
         val db:SQLiteDatabase = this.readableDatabase
-
         val sqlQuery = "SELECT max($Survey_Id) from $SurveyTableName"
 
         val cursor: Cursor = db.rawQuery(sqlQuery, null)
@@ -361,7 +359,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         if (cursor.moveToFirst()) {
             lastSurveyId = cursor.getInt(0)
         }
-
         cursor.close()
         db.close()
 

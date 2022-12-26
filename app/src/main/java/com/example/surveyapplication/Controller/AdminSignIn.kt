@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ListView
+import android.widget.Toast
 import com.example.surveyapplication.MainActivity
 import com.example.surveyapplication.Model.CustomAdapter
+import com.example.surveyapplication.Model.CustomAdapterAdmin
 import com.example.surveyapplication.Model.SurveyList
 import com.example.surveyapplication.R
 
@@ -23,11 +25,13 @@ class AdminSignIn : AppCompatActivity() {
 
         surveyList = SurveyList(this)
 
-        val customAdapter = CustomAdapter(applicationContext, surveyList)
+//        val customAdapter = CustomAdapter(applicationContext, surveyList)
+
+        val customAdapterAdmin = CustomAdapterAdmin(applicationContext, surveyList)
 
         listView = findViewById(R.id.AdminListView)
 
-        listView.adapter = customAdapter
+        listView.adapter = customAdapterAdmin
 
         listView.setOnItemClickListener { parent, view, position, id ->
             surveyId = surveyList.getSurveyId(id.toInt())
@@ -41,10 +45,15 @@ class AdminSignIn : AppCompatActivity() {
     }
 
     fun updateSurvey(view: View) {
-        val updateSurveyActivity = Intent(this, UpdateSurvey::class.java)
-        updateSurveyActivity.putExtra("surveyId", surveyId)
-        updateSurveyActivity.putExtra("surveyTitle", surveyTitle)
-        startActivity(updateSurveyActivity)
+        if (surveyId != 0) {
+            val updateSurveyActivity = Intent(this, UpdateSurvey::class.java)
+            updateSurveyActivity.putExtra("surveyId", surveyId)
+            updateSurveyActivity.putExtra("surveyTitle", surveyTitle)
+            startActivity(updateSurveyActivity)
+        } else {
+            Toast.makeText(this, "Please select a survey first!",
+                            Toast.LENGTH_LONG).show()
+        }
     }
 
     fun signOut(view: View) {
