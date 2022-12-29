@@ -1,9 +1,8 @@
 package com.example.surveyapplication.Model
 
 import android.content.Context
-import java.io.Serializable
 
-class QuestionList(context: Context, surveyId: Int) : Serializable {
+class QuestionList(context: Context, surveyId: Int) {
 
     private var questionList: ArrayList<Question> = ArrayList()
     private val dbHelper: DatabaseHelper = DatabaseHelper(context)
@@ -28,15 +27,11 @@ class QuestionList(context: Context, surveyId: Int) : Serializable {
         return questionList[index]
     }
 
-    fun setQuestionList(list: ArrayList<Question>) {
-        questionList = list
-    }
-
-    fun addQuestion(question: Question) {
-        questionList.add(question)
-    }
-
     fun getQuestionId(position: Int): Int {
         return questionList[position].id
+    }
+
+    fun getSurveyId(position: Int): Int {
+        return questionList[position].surveyId
     }
 }

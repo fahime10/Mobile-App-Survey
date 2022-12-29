@@ -5,10 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import com.example.surveyapplication.MainActivity
-import com.example.surveyapplication.Model.CustomAdapter
-import com.example.surveyapplication.Model.CustomAdapterAdmin
+import com.example.surveyapplication.View.CustomAdapterAdmin
+import com.example.surveyapplication.Model.DatabaseHelper
 import com.example.surveyapplication.Model.SurveyList
 import com.example.surveyapplication.R
 
@@ -18,14 +19,14 @@ class AdminSignIn : AppCompatActivity() {
     private lateinit var surveyList: SurveyList
     private lateinit var surveyTitle: String
     private var surveyId: Int = 0
+    private var participants: Int = 0
+    private val dbHelper: DatabaseHelper = DatabaseHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_sign_in)
 
         surveyList = SurveyList(this)
-
-//        val customAdapter = CustomAdapter(applicationContext, surveyList)
 
         val customAdapterAdmin = CustomAdapterAdmin(applicationContext, surveyList)
 
@@ -52,6 +53,20 @@ class AdminSignIn : AppCompatActivity() {
             startActivity(updateSurveyActivity)
         } else {
             Toast.makeText(this, "Please select a survey first!",
+                            Toast.LENGTH_LONG).show()
+        }
+    }
+
+    fun displayStatistics(view: View) {
+        participants = findViewById<TextView>(R.id.participants).text.toString().toInt()
+        if (surveyId != 0) {
+            val displayStats = Intent(this, DisplayStatistics::class.java)
+            displayStats.putExtra("surveyId", surveyId)
+            displayStats.putExtra("surveyTitle", surveyTitle)
+            displayStats.putExtra("participants", participants)
+            startActivity(displayStats)
+        } else {
+            Toast.makeText(this, "Please select a survey to display statistics...",
                             Toast.LENGTH_LONG).show()
         }
     }

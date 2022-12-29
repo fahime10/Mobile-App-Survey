@@ -1,18 +1,15 @@
-package com.example.surveyapplication.Model
+package com.example.surveyapplication.View
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.get
+import com.example.surveyapplication.Model.SurveyList
 import com.example.surveyapplication.R
-import org.w3c.dom.Text
 
-class CustomAdapterAdmin(private val appContext: Context, private val surveyList: SurveyList) : BaseAdapter() {
+class CustomAdapter(private val appContext: Context, private val surveyList: SurveyList) : BaseAdapter() {
 
     private val inflater: LayoutInflater =
         appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -32,11 +29,11 @@ class CustomAdapterAdmin(private val appContext: Context, private val surveyList
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
 
         var view: View? = view
-        view = inflater.inflate(R.layout.activity_admin_view, parent, false)
+        view = inflater.inflate(R.layout.activity_list_view, parent, false)
 
-        val surveyTitle = view.findViewById<TextView>(R.id.surveyAdmin)
-        val surveyStartDate = view.findViewById<TextView>(R.id.startDateAdmin)
-        val surveyEndDate = view.findViewById<TextView>(R.id.endDateAdmin)
+        val surveyTitle = view.findViewById<TextView>(R.id.survey)
+        val surveyStartDate = view.findViewById<TextView>(R.id.startDate)
+        val surveyEndDate = view.findViewById<TextView>(R.id.endDate)
 
         surveyTitle.text = surveyList.getSurvey(position).title
         surveyStartDate.text = surveyList.getSurvey(position).startDate

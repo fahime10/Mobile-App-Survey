@@ -256,6 +256,35 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         return questionList
     }
 
+    fun retrieveAllSurveyAnswers(surveyId: Int): ArrayList<StudentSurveyAnswer> {
+        val surveyAnswerList = ArrayList<StudentSurveyAnswer>()
+
+        val db: SQLiteDatabase = this.readableDatabase
+        val sqlQuery = "SELECT $StudentSurveyAnswer_Id FROM $StudentSurveyAnswerTableName " +
+                        "WHERE $StudentSurveyAnswer_SurveyId=$surveyId"
+
+        val cursor: Cursor = db.rawQuery(sqlQuery, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(0)
+                val studentId = cursor.getInt(1)
+                val surveyId = cursor.getInt(2)
+                val questionId = cursor.getInt(3)
+                val answerId = cursor.getInt(4)
+
+                val a = StudentSurveyAnswer(id, studentId, surveyId, questionId, answerId)
+
+                surveyAnswerList.add(a)
+            } while (cursor.moveToNext())
+
+            cursor.close()
+            db.close()
+        }
+
+        return surveyAnswerList
+    }
+
     fun retrieveAllAnswers(): ArrayList<Answer> {
         val answerList = ArrayList<Answer>()
 
@@ -351,7 +380,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
 
     fun retrieveLastSurveyId(): Int {
         var lastSurveyId = 0
-        val db:SQLiteDatabase = this.readableDatabase
+        val db: SQLiteDatabase = this.readableDatabase
         val sqlQuery = "SELECT max($Survey_Id) from $SurveyTableName"
 
         val cursor: Cursor = db.rawQuery(sqlQuery, null)
@@ -363,5 +392,68 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         db.close()
 
         return lastSurveyId
+    }
+
+    fun listParticipants(surveyId: Int): Int {
+        var allParticipants = 0
+
+        val db: SQLiteDatabase = this.readableDatabase
+        val sqlQuery = "SELECT DISTINCT $StudentSurveyAnswer_StudentId FROM $StudentSurveyAnswerTableName " +
+                "WHERE $StudentSurveyAnswer_SurveyId=$surveyId"
+
+        val cursor: Cursor = db.rawQuery(sqlQuery, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                allParticipants++
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+
+        return allParticipants
+    }
+
+    fun retrieveSurveyAnswers(questionId: Int, answerId: Int): Int {
+        var total = 0
+
+        val db: SQLiteDatabase = this.readableDatabase
+        val sqlQuery = "SELECT $StudentSurveyAnswer_Id " +
+                        "FROM $StudentSurveyAnswerTableName " +
+                        "WHERE $StudentSurveyAnswer_QuestionId=$questionId "
+                        "AND $StudentSurveyAnswer_AnswerId=$answerId"
+
+        val cursor: Cursor = db.rawQuery(sqlQuery, null)
+
+        if (cursor.moveToNext()) {
+            do {
+                total++
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+
+        return total
+    }
+
+    fun surveyAnswers(questionId: Int, answerId: Int): Int {
+        var total = 0
+
+        val db: SQLiteDatabase = this.readableDatabase
+        val query = "SELECT $StudentSurveyAnswer_Id FROM $StudentSurveyAnswerTableName " +
+                "WHERE $StudentSurveyAnswer_QuestionId=$questionId " +
+                "AND $StudentSurveyAnswer_AnswerId=$answerId"
+
+        val cursor: Cursor = db.rawQuery(query, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                total++
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+
+        return total
     }
 }

@@ -3,13 +3,13 @@ package com.example.surveyapplication.Controller
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import android.view.View
 import android.widget.ListView
 import android.widget.Toast
 import com.example.surveyapplication.MainActivity
 import com.example.surveyapplication.Model.*
 import com.example.surveyapplication.R
+import com.example.surveyapplication.View.CustomAdapter
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
