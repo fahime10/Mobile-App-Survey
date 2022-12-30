@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
 import com.example.surveyapplication.Model.QuestionList
-import com.example.surveyapplication.Model.StudentSurveyAnswerList
 import com.example.surveyapplication.R
 import com.example.surveyapplication.View.CustomAdapterStats
 

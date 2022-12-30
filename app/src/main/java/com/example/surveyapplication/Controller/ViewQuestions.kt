@@ -29,6 +29,9 @@ class ViewQuestions : AppCompatActivity() {
 
         surveyId = intent.getIntExtra("surveyId", 0)
         studentId = intent.getIntExtra("studentId", 0)
+        val surveyTitle = intent.getStringExtra("surveyTitle")
+
+        findViewById<TextView>(R.id.chosenSurvey).text = surveyTitle
 
         questions = QuestionList(this, surveyId)
 
@@ -48,7 +51,7 @@ class ViewQuestions : AppCompatActivity() {
         val answerRadioGroup = findViewById<RadioGroup>(R.id.answerGroup)
         val answer = findViewById<RadioButton>(answerRadioGroup.checkedRadioButtonId)
         if (index + 1 <= questions.getQuestionList().size) {
-            if (index == questions.getQuestionList().size-1) {
+            if (index == questions.getQuestionList().size-2) {
                 findViewById<Button>(R.id.next).text = "Finish"
             }
 
@@ -71,13 +74,15 @@ class ViewQuestions : AppCompatActivity() {
                 findViewById<TextView>(R.id.question).text =
                     questions.getQuestion(index).questionText
             }
-        } else {
-            Toast.makeText(this, "Thank you for completing the survey",
-                            Toast.LENGTH_LONG).show()
-            dbHelper.storeAllAnswers(studentSurveyAnswers)
-            finish()
-            val studentSignIn = Intent(this, StudentSignIn::class.java)
-            startActivity(studentSignIn)
+
+            if (studentSurveyAnswers.size == 10) {
+                Toast.makeText(this, "Thank you for completing the survey",
+                    Toast.LENGTH_LONG).show()
+                dbHelper.storeAllAnswers(studentSurveyAnswers)
+                finish()
+                val studentSignIn = Intent(this, StudentSignIn::class.java)
+                startActivity(studentSignIn)
+            }
         }
     }
 

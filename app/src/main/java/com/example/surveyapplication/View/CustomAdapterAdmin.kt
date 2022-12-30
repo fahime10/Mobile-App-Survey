@@ -18,11 +18,11 @@ class CustomAdapterAdmin(private val appContext: Context, private val surveyList
         appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getCount(): Int {
-        return surveyList.getCount();
+        return surveyList.getSurveyList().size;
     }
 
     override fun getItem(i: Int): Any? {
-        return i
+        return surveyList.getSurveyList()[i]
     }
 
     override fun getItemId(i: Int): Long {
@@ -42,7 +42,7 @@ class CustomAdapterAdmin(private val appContext: Context, private val surveyList
         surveyTitle.text = surveyList.getSurvey(position).title
         surveyStartDate.text = surveyList.getSurvey(position).startDate
         surveyEndDate.text = surveyList.getSurvey(position).endDate
-        participants.text = dbHelper.listParticipants(surveyList.getSurvey(position).id).toString()
+        participants.text = dbHelper.listParticipants(surveyList.getSurveyId(position)).toString()
 
         return view
     }

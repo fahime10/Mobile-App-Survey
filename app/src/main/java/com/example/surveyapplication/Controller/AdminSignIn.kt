@@ -34,9 +34,12 @@ class AdminSignIn : AppCompatActivity() {
 
         listView.adapter = customAdapterAdmin
 
+
         listView.setOnItemClickListener { parent, view, position, id ->
             surveyId = surveyList.getSurveyId(id.toInt())
             surveyTitle = surveyList.getSurveyTitle(id.toInt())
+            participants = dbHelper.listParticipants(surveyId)
+            Toast.makeText(this, "$participants", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -58,7 +61,6 @@ class AdminSignIn : AppCompatActivity() {
     }
 
     fun displayStatistics(view: View) {
-        participants = findViewById<TextView>(R.id.participants).text.toString().toInt()
         if (surveyId != 0) {
             val displayStats = Intent(this, DisplayStatistics::class.java)
             displayStats.putExtra("surveyId", surveyId)

@@ -20,6 +20,7 @@ class StudentSignIn : AppCompatActivity() {
     private lateinit var listView: ListView
     private lateinit var surveyList: SurveyList
     private var surveyId: Int = 0
+    private var surveyTitle: String = ""
     var studentId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +67,7 @@ class StudentSignIn : AppCompatActivity() {
 
         listView.setOnItemClickListener { parent, view, position, id ->
             surveyId = surveyList.getSurveyId(id.toInt())
+            surveyTitle = surveyList.getSurveyTitle(id.toInt())
         }
     }
 
@@ -75,6 +77,7 @@ class StudentSignIn : AppCompatActivity() {
             val startSurvey = Intent(this, ViewQuestions::class.java)
             startSurvey.putExtra("surveyId", surveyId)
             startSurvey.putExtra("studentId", studentId)
+            startSurvey.putExtra("surveyTitle", surveyTitle)
             startActivity(startSurvey)
         } else {
             Toast.makeText(this, "Please select a survey first!",

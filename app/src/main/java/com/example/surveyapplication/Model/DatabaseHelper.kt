@@ -436,8 +436,8 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         return total
     }
 
-    fun surveyAnswers(questionId: Int, answerId: Int): Int {
-        var total = 0
+    fun surveyAnswers(questionId: Int, answerId: Int): Double {
+        var total = 0.0
 
         val db: SQLiteDatabase = this.readableDatabase
         val query = "SELECT $StudentSurveyAnswer_Id FROM $StudentSurveyAnswerTableName " +

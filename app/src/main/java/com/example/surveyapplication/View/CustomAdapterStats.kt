@@ -8,8 +8,8 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.surveyapplication.Model.DatabaseHelper
 import com.example.surveyapplication.Model.QuestionList
-import com.example.surveyapplication.Model.StudentSurveyAnswerList
 import com.example.surveyapplication.R
+import kotlin.math.roundToInt
 
 class CustomAdapterStats(private val appContext: Context,
                          private val questionList: QuestionList,
@@ -46,23 +46,25 @@ class CustomAdapterStats(private val appContext: Context,
         val dStat = view.findViewById<TextView>(R.id.DStat)
         val sdStat = view.findViewById<TextView>(R.id.SdStat)
 
-        counter++
-        questionCounter.text = counter.toString()
-        saStat.text =
-            (db.surveyAnswers(questionList.getQuestionList()[position].id, 1)/
-                    participants * 100).toString().plus("%")
+        if (participants != 0) {
+            counter++
+            questionCounter.text = counter.toString()
+            saStat.text =
+                (db.surveyAnswers(questionList.getQuestionList()[position].id, 1) /
+                        participants * 100).roundToInt().toString().plus("%")
 
-        aStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 2)/
-                participants * 100).toString().plus("%")
+            aStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 2) /
+                    participants * 100).roundToInt().toString().plus("%")
 
-        nStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 3)/
-                participants * 100).toString().plus("%")
+            nStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 3) /
+                    participants * 100).roundToInt().toString().plus("%")
 
-        dStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 4)/
-                participants * 100).toString().plus("%")
+            dStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 4) /
+                    participants * 100).roundToInt().toString().plus("%")
 
-        sdStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 5)/
-                participants * 100).toString().plus("%")
+            sdStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 5) /
+                    participants * 100).roundToInt().toString().plus("%")
+        }
 
         return view
     }
