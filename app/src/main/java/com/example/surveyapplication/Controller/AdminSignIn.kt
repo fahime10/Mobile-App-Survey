@@ -39,7 +39,6 @@ class AdminSignIn : AppCompatActivity() {
             surveyId = surveyList.getSurveyId(id.toInt())
             surveyTitle = surveyList.getSurveyTitle(id.toInt())
             participants = dbHelper.listParticipants(surveyId)
-            Toast.makeText(this, "$participants", Toast.LENGTH_LONG).show()
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.surveyapplication.Controller
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.TextView
 import com.example.surveyapplication.Model.QuestionList
 import com.example.surveyapplication.R
 import com.example.surveyapplication.View.CustomAdapterStats
+import com.example.surveyapplication.View.QuestionsChart
 
 class DisplayStatistics : AppCompatActivity() {
 
@@ -38,6 +40,9 @@ class DisplayStatistics : AppCompatActivity() {
     }
 
     fun displayCharts(view: View) {
-
+        val displayChart = Intent(this, QuestionsChart::class.java)
+        displayChart.putExtra("surveyTitle", surveyTitle)
+        displayChart.putExtra("surveyId", surveyId)
+        startActivity(displayChart)
     }
 }

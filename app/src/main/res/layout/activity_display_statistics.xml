@@ -107,9 +107,10 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/displayChart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="displayCharts"
         android:text="Display charts"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
