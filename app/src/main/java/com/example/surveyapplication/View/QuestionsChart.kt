@@ -1,10 +1,14 @@
 package com.example.surveyapplication.View
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.surveyapplication.Controller.AdminSignIn
 import com.example.surveyapplication.Model.DatabaseHelper
 import com.example.surveyapplication.Model.Question
 import com.example.surveyapplication.Model.QuestionList
@@ -19,8 +23,6 @@ import com.github.mikephil.charting.utils.MPPointF
 
 class QuestionsChart : AppCompatActivity() {
 
-    // on below line we are creating
-    // variables for our pie chart
     lateinit var pieChart: PieChart
     lateinit var questionList: ArrayList<Question>
     private val dbHelper: DatabaseHelper = DatabaseHelper(this)
@@ -28,11 +30,13 @@ class QuestionsChart : AppCompatActivity() {
     private var id: Int = 0
     private var index = 0
 
-    var answer1: Float = 0f
-    var answer2: Float = 0f
-    var answer3: Float = 0f
-    var answer4: Float = 0f
-    var answer5: Float = 0f
+    private val entries: ArrayList<PieEntry> = ArrayList()
+
+    private var answer1: Float = 0f
+    private var answer2: Float = 0f
+    private var answer3: Float = 0f
+    private var answer4: Float = 0f
+    private var answer5: Float = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,7 +102,6 @@ class QuestionsChart : AppCompatActivity() {
         answer4= dbHelper.surveyAnswers(questionList[index].id, 4).toFloat()
         answer5= dbHelper.surveyAnswers(questionList[index].id, 5).toFloat()
 
-        val entries: ArrayList<PieEntry> = ArrayList()
         entries.add(PieEntry(answer1))
         entries.add(PieEntry(answer2))
         entries.add(PieEntry(answer3))
@@ -140,6 +143,107 @@ class QuestionsChart : AppCompatActivity() {
 
         // loading chart
         pieChart.invalidate()
+    }
 
+    fun nextQuestionChart(view: View) {
+        if (index < questionList.size) {
+            if (index == questionList.size-2) {
+                findViewById<Button>(R.id.nextChartBtn).text = "Finish"
+            }
+
+            index++
+            if (index != 10) {
+                findViewById<TextView>(R.id.questionStat).text = questionList[index].questionText
+
+                answer1 = dbHelper.surveyAnswers(questionList[index].id, 1).toFloat()
+                answer2 = dbHelper.surveyAnswers(questionList[index].id, 2).toFloat()
+                answer3 = dbHelper.surveyAnswers(questionList[index].id, 3).toFloat()
+                answer4 = dbHelper.surveyAnswers(questionList[index].id, 4).toFloat()
+                answer5 = dbHelper.surveyAnswers(questionList[index].id, 5).toFloat()
+
+                entries[0] = PieEntry(answer1)
+                entries[1] = PieEntry(answer2)
+                entries[2] = PieEntry(answer3)
+                entries[3] = PieEntry(answer4)
+                entries[4] = PieEntry(answer5)
+
+                val dataSet = PieDataSet(entries, "Survey")
+                dataSet.sliceSpace = 3f
+                dataSet.iconsOffset = MPPointF(0f, 40f)
+                dataSet.selectionShift = 5f
+
+                // add a lot of colors to list
+                val colors: ArrayList<Int> = ArrayList()
+                colors.add(resources.getColor(R.color.limegreen))
+                colors.add(resources.getColor(R.color.green))
+                colors.add(resources.getColor(R.color.yellow))
+                colors.add(resources.getColor(R.color.light_red))
+                colors.add(resources.getColor(R.color.red))
+
+                // on below line we are setting colors.
+                dataSet.colors = colors
+
+                // on below line we are setting pie data set
+                val data = PieData(dataSet)
+                data.setValueFormatter(PercentFormatter())
+                data.setValueTextSize(15f)
+                data.setValueTypeface(Typeface.DEFAULT_BOLD)
+                data.setValueTextColor(Color.WHITE)
+                pieChart.data = data
+
+                pieChart.highlightValues(null)
+                pieChart.invalidate()
+            } else {
+                finish()
+                val adminSignIn = Intent(this, AdminSignIn::class.java)
+                startActivity(adminSignIn)
+            }
+        }
+    }
+
+    fun previousQuestionChart(view: View) {
+        if (index > 0) {
+            if (index < 9) {
+                findViewById<TextView>(R.id.nextChartBtn).text = "Next"
+            }
+            index--
+            findViewById<TextView>(R.id.questionStat).text = questionList[index].questionText
+
+            answer1 = dbHelper.surveyAnswers(questionList[index].id, 1).toFloat()
+            answer2 = dbHelper.surveyAnswers(questionList[index].id, 2).toFloat()
+            answer3 = dbHelper.surveyAnswers(questionList[index].id, 3).toFloat()
+            answer4 = dbHelper.surveyAnswers(questionList[index].id, 4).toFloat()
+            answer5 = dbHelper.surveyAnswers(questionList[index].id, 5).toFloat()
+
+            entries[0] = PieEntry(answer1)
+            entries[1] = PieEntry(answer2)
+            entries[2] = PieEntry(answer3)
+            entries[3] = PieEntry(answer4)
+            entries[4] = PieEntry(answer5)
+
+            val dataSet = PieDataSet(entries, "Survey")
+            dataSet.sliceSpace = 3f
+            dataSet.iconsOffset = MPPointF(0f, 40f)
+            dataSet.selectionShift = 5f
+
+            val colors: ArrayList<Int> = ArrayList()
+            colors.add(resources.getColor(R.color.limegreen))
+            colors.add(resources.getColor(R.color.green))
+            colors.add(resources.getColor(R.color.yellow))
+            colors.add(resources.getColor(R.color.light_red))
+            colors.add(resources.getColor(R.color.red))
+
+            dataSet.colors = colors
+
+            val data = PieData(dataSet)
+            data.setValueFormatter(PercentFormatter())
+            data.setValueTextSize(15f)
+            data.setValueTypeface(Typeface.DEFAULT_BOLD)
+            data.setValueTextColor(Color.WHITE)
+            pieChart.data = data
+
+            pieChart.highlightValues(null)
+            pieChart.invalidate()
+        }
     }
 }

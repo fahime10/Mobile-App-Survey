@@ -56,10 +56,11 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/previousChartBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:onClick="previousQuestionChart"
         android:text="Previous question"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,14 +68,15 @@
         app:layout_constraintVertical_bias="0.214" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/nextChartBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="nextQuestionChart"
         android:text="Next question"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.686"
-        app:layout_constraintStart_toEndOf="@+id/button5"
+        app:layout_constraintStart_toEndOf="@+id/previousChartBtn"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout12"
         app:layout_constraintVertical_bias="0.677" />
 

@@ -6,10 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import com.example.surveyapplication.Model.Answer
-import com.example.surveyapplication.Model.DatabaseHelper
-import com.example.surveyapplication.Model.QuestionList
-import com.example.surveyapplication.Model.StudentSurveyAnswer
+import com.example.surveyapplication.Model.*
 import com.example.surveyapplication.R
 
 class ViewQuestions : AppCompatActivity() {
@@ -50,7 +47,7 @@ class ViewQuestions : AppCompatActivity() {
     fun next(view: View) {
         val answerRadioGroup = findViewById<RadioGroup>(R.id.answerGroup)
         val answer = findViewById<RadioButton>(answerRadioGroup.checkedRadioButtonId)
-        if (index + 1 <= questions.getQuestionList().size) {
+        if (index < questions.getQuestionList().size) {
             if (index == questions.getQuestionList().size-2) {
                 findViewById<Button>(R.id.next).text = "Finish"
             }
@@ -64,23 +61,22 @@ class ViewQuestions : AppCompatActivity() {
                 else -> 0
             }
 
-            val surveyAnswer = StudentSurveyAnswer(-1, studentId, surveyId,
-                                                    questions.getQuestionId(index), answerId)
-
-            studentSurveyAnswers.add(surveyAnswer)
-
             index++
             if (index != 10) {
+                val surveyAnswer = StudentSurveyAnswer(-1, studentId, surveyId,
+                    questions.getQuestionId(index), answerId)
+
+                studentSurveyAnswers.add(surveyAnswer)
+
                 findViewById<TextView>(R.id.question).text =
                     questions.getQuestion(index).questionText
-            }
-
-            if (studentSurveyAnswers.size == 10) {
+            } else {
                 Toast.makeText(this, "Thank you for completing the survey",
                     Toast.LENGTH_LONG).show()
                 dbHelper.storeAllAnswers(studentSurveyAnswers)
                 finish()
                 val studentSignIn = Intent(this, StudentSignIn::class.java)
+                studentSignIn.putExtra("studentId", studentId)
                 startActivity(studentSignIn)
             }
         }
