@@ -21,7 +21,7 @@ class StudentSignIn : AppCompatActivity() {
     private lateinit var surveyList: SurveyList
     private var surveyId: Int = 0
     private var surveyTitle: String = ""
-    var studentId = 0
+    private var studentId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

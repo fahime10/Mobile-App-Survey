@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ADD8E6"
     tools:context=".View.QuestionsChart">
 
     <RelativeLayout
@@ -26,7 +27,8 @@
             android:padding="4dp"
             android:text="Survey Title"
             android:textAlignment="center"
-            android:textColor="@color/purple_200"
+            android:textColor="#301934"
+            android:textStyle="bold"
             android:textSize="20sp" />
 
         <TextView
@@ -41,7 +43,7 @@
             android:padding="8dp"
             android:text="Question"
             android:textAlignment="center"
-            android:textColor="@color/purple_200"
+            android:textColor="#301934"
             android:textSize="16sp" />
 
         <!--Ui component for our pie chart-->

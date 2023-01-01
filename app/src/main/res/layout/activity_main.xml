@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ADD8E6"
     tools:context=".MainActivity">
 
     <TextView
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Survey Application"
-        android:textColor="@color/purple_200"
+        android:textColor="#301934"
+        android:textStyle="bold"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.427"
@@ -48,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="I am admin"
+            android:buttonTint="#FFA500"
             android:textSize="18sp" />
 
         <RadioButton
@@ -55,6 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="I am student"
+            android:buttonTint="#FFA500"
             android:textSize="18sp" />
     </RadioGroup>
 

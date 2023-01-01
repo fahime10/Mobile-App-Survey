@@ -33,7 +33,7 @@ class UpdateSurvey : AppCompatActivity() {
     private lateinit var updatedSurvey: Survey
     private val dbHelper = DatabaseHelper(this)
 
-    var index = 0
+    private var index = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

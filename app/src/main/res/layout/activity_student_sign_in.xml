@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ADD8E6"
     tools:context=".Controller.StudentSignIn">
 
     <TextView
@@ -11,9 +12,11 @@
         android:layout_width="280dp"
         android:layout_height="51dp"
         android:layout_marginTop="16dp"
-        android:text="Survey Application"
-        android:textColor="@color/purple_200"
-        android:textSize="34sp"
+        android:text="Select a survey"
+        android:textColor="#301934"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"

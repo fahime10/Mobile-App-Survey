@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ADD8E6"
     tools:context=".Controller.UpdateSurvey">
 
     <TextView
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Update Survey"
-        android:textColor="@color/purple_200"
+        android:textColor="#301934"
+        android:textStyle="bold"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -226,7 +228,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Survey Title"
-        android:textColor="@color/purple_200"
+        android:textColor="#301934"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.219"

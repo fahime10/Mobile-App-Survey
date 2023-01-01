@@ -385,28 +385,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context,DatabaseName,n
         return allParticipants
     }
 
-    fun retrieveSurveyAnswers(questionId: Int, answerId: Int): Int {
-        var total = 0
-
-        val db: SQLiteDatabase = this.readableDatabase
-        val sqlQuery = "SELECT $StudentSurveyAnswer_Id " +
-                        "FROM $StudentSurveyAnswerTableName " +
-                        "WHERE $StudentSurveyAnswer_QuestionId=$questionId "
-                        "AND $StudentSurveyAnswer_AnswerId=$answerId"
-
-        val cursor: Cursor = db.rawQuery(sqlQuery, null)
-
-        if (cursor.moveToNext()) {
-            do {
-                total++
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-        db.close()
-
-        return total
-    }
-
     fun surveyAnswers(questionId: Int, answerId: Int): Double {
         var total = 0.0
 

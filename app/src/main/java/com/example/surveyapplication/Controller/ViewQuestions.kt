@@ -18,7 +18,7 @@ class ViewQuestions : AppCompatActivity() {
     private var surveyId = 0
     private val dbHelper: DatabaseHelper = DatabaseHelper(this)
 
-    var index = 0
+    private var index = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,13 +61,13 @@ class ViewQuestions : AppCompatActivity() {
                 else -> 0
             }
 
+            val surveyAnswer = StudentSurveyAnswer(-1, studentId, surveyId,
+                questions.getQuestionId(index), answerId)
+
+            studentSurveyAnswers.add(surveyAnswer)
+
             index++
             if (index != 10) {
-                val surveyAnswer = StudentSurveyAnswer(-1, studentId, surveyId,
-                    questions.getQuestionId(index), answerId)
-
-                studentSurveyAnswers.add(surveyAnswer)
-
                 findViewById<TextView>(R.id.question).text =
                     questions.getQuestion(index).questionText
             } else {

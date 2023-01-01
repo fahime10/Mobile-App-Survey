@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ADD8E6"
     tools:context=".Controller.ViewQuestions">
 
     <TextView
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Survey Application"
-        android:textColor="@color/purple_200"
+        android:textColor="#301934"
+        android:textStyle="bold"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,30 +48,35 @@
             android:id="@+id/a1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:buttonTint="#FFA500"
             android:text="RadioButton" />
 
         <RadioButton
             android:id="@+id/a2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:buttonTint="#FFA500"
             android:text="RadioButton" />
 
         <RadioButton
             android:id="@+id/a3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:buttonTint="#FFA500"
             android:text="RadioButton" />
 
         <RadioButton
             android:id="@+id/a4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:buttonTint="#FFA500"
             android:text="RadioButton" />
 
         <RadioButton
             android:id="@+id/a5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:buttonTint="#FFA500"
             android:text="RadioButton" />
     </RadioGroup>
 

@@ -15,7 +15,7 @@ class CustomAdapterStats(private val appContext: Context,
                          private val questionList: QuestionList,
                             private val participants: Int) : BaseAdapter() {
 
-    var counter = 0
+    private var counter = 0
 
     private var db: DatabaseHelper = DatabaseHelper(appContext)
 

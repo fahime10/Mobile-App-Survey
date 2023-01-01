@@ -30,8 +30,4 @@ class QuestionList(context: Context, surveyId: Int) {
     fun getQuestionId(position: Int): Int {
         return questionList[position].id
     }
-
-    fun getSurveyId(position: Int): Int {
-        return questionList[position].surveyId
-    }
 }
