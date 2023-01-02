@@ -10,6 +10,7 @@
         android:layout_width="386dp"
         android:layout_height="172dp"
         android:orientation="horizontal"
+        android:background="@drawable/border"
         tools:layout_editor_absoluteX="21dp"
         tools:layout_editor_absoluteY="31dp">
 

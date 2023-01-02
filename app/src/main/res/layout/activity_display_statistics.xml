@@ -26,7 +26,7 @@
         android:text="Survey Title"
         android:textAlignment="center"
         android:textColor="#301934"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -51,13 +51,14 @@
         android:layout_width="379dp"
         android:layout_height="40dp"
         android:orientation="horizontal"
+        android:background="@drawable/border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/surveyTitleStat">
 
         <TextView
             android:id="@+id/textView26"
-            android:layout_width="82dp"
+            android:layout_width="70dp"
             android:layout_height="36dp"
             android:layout_weight="1"
             android:textSize="16sp" />
@@ -67,6 +68,7 @@
             android:layout_width="56dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/border"
             android:text="Strongly agree"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -74,8 +76,9 @@
         <TextView
             android:id="@+id/textView30"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/border"
             android:text="Agree"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -83,8 +86,9 @@
         <TextView
             android:id="@+id/textView31"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/border"
             android:text="Neutral"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -92,8 +96,9 @@
         <TextView
             android:id="@+id/textView32"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/border"
             android:text="Disagree"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -103,6 +108,7 @@
             android:layout_width="59dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/border"
             android:text="Strongly disagree"
             android:textColor="@color/black"
             android:textSize="16sp" />

@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="I am admin"
-            android:buttonTint="#FFA500"
+            android:buttonTint="#B5651D"
             android:textSize="18sp" />
 
         <RadioButton
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="I am student"
-            android:buttonTint="#FFA500"
+            android:buttonTint="#B5651D"
             android:textSize="18sp" />
     </RadioGroup>
 

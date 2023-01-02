@@ -34,9 +34,9 @@
             android:id="@+id/AdminListView"
             android:layout_width="match_parent"
             android:layout_height="346dp"
-            android:divider="#f00"
+            android:divider="#FF0000"
             android:dividerHeight="1dp"
-            android:listSelector="#0f0" />
+            android:listSelector="#00FF00" />
     </LinearLayout>
 
     <Button
