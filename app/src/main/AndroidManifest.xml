@@ -13,6 +13,13 @@
         android:theme="@style/Theme.SurveyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".View.QuestionsAverage"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".View.QuestionsChart"
             android:exported="false">
             <meta-data

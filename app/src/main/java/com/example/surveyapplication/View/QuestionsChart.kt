@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.surveyapplication.Controller.AdminSignIn
 import com.example.surveyapplication.Model.DatabaseHelper
 import com.example.surveyapplication.Model.Question
-import com.example.surveyapplication.Model.QuestionList
 import com.example.surveyapplication.R
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -23,8 +22,8 @@ import com.github.mikephil.charting.utils.MPPointF
 
 class QuestionsChart : AppCompatActivity() {
 
-    lateinit var pieChart: PieChart
-    lateinit var questionList: ArrayList<Question>
+    private lateinit var pieChart: PieChart
+    private lateinit var questionList: ArrayList<Question>
     private val dbHelper: DatabaseHelper = DatabaseHelper(this)
     private var title: String? = ""
     private var id: Int = 0
@@ -96,11 +95,11 @@ class QuestionsChart : AppCompatActivity() {
 
         // on below line we are creating array list and
         // adding data to it to display in pie chart
-        answer1= dbHelper.surveyAnswers(questionList[index].id, 1).toFloat()
-        answer2= dbHelper.surveyAnswers(questionList[index].id, 2).toFloat()
-        answer3= dbHelper.surveyAnswers(questionList[index].id, 3).toFloat()
-        answer4= dbHelper.surveyAnswers(questionList[index].id, 4).toFloat()
-        answer5= dbHelper.surveyAnswers(questionList[index].id, 5).toFloat()
+        answer1 = dbHelper.surveyAnswers(questionList[index].id, 5).toFloat()
+        answer2 = dbHelper.surveyAnswers(questionList[index].id, 4).toFloat()
+        answer3 = dbHelper.surveyAnswers(questionList[index].id, 3).toFloat()
+        answer4 = dbHelper.surveyAnswers(questionList[index].id, 2).toFloat()
+        answer5 = dbHelper.surveyAnswers(questionList[index].id, 1).toFloat()
 
         entries.add(PieEntry(answer1))
         entries.add(PieEntry(answer2))
@@ -148,18 +147,18 @@ class QuestionsChart : AppCompatActivity() {
     fun nextQuestionChart(view: View) {
         if (index < questionList.size) {
             if (index == questionList.size-2) {
-                findViewById<Button>(R.id.nextChartBtn).text = "Finish"
+                findViewById<Button>(R.id.backBtn).text = "Finish"
             }
 
             index++
             if (index != 10) {
                 findViewById<TextView>(R.id.questionStat).text = questionList[index].questionText
 
-                answer1 = dbHelper.surveyAnswers(questionList[index].id, 1).toFloat()
-                answer2 = dbHelper.surveyAnswers(questionList[index].id, 2).toFloat()
+                answer1 = dbHelper.surveyAnswers(questionList[index].id, 5).toFloat()
+                answer2 = dbHelper.surveyAnswers(questionList[index].id, 4).toFloat()
                 answer3 = dbHelper.surveyAnswers(questionList[index].id, 3).toFloat()
-                answer4 = dbHelper.surveyAnswers(questionList[index].id, 4).toFloat()
-                answer5 = dbHelper.surveyAnswers(questionList[index].id, 5).toFloat()
+                answer4 = dbHelper.surveyAnswers(questionList[index].id, 2).toFloat()
+                answer5 = dbHelper.surveyAnswers(questionList[index].id, 1).toFloat()
 
                 entries[0] = PieEntry(answer1)
                 entries[1] = PieEntry(answer2)
@@ -204,16 +203,16 @@ class QuestionsChart : AppCompatActivity() {
     fun previousQuestionChart(view: View) {
         if (index > 0) {
             if (index < 9) {
-                findViewById<TextView>(R.id.nextChartBtn).text = "Next"
+                findViewById<TextView>(R.id.backBtn).text = "Next"
             }
             index--
             findViewById<TextView>(R.id.questionStat).text = questionList[index].questionText
 
-            answer1 = dbHelper.surveyAnswers(questionList[index].id, 1).toFloat()
-            answer2 = dbHelper.surveyAnswers(questionList[index].id, 2).toFloat()
+            answer1 = dbHelper.surveyAnswers(questionList[index].id, 5).toFloat()
+            answer2 = dbHelper.surveyAnswers(questionList[index].id, 4).toFloat()
             answer3 = dbHelper.surveyAnswers(questionList[index].id, 3).toFloat()
-            answer4 = dbHelper.surveyAnswers(questionList[index].id, 4).toFloat()
-            answer5 = dbHelper.surveyAnswers(questionList[index].id, 5).toFloat()
+            answer4 = dbHelper.surveyAnswers(questionList[index].id, 2).toFloat()
+            answer5 = dbHelper.surveyAnswers(questionList[index].id, 1).toFloat()
 
             entries[0] = PieEntry(answer1)
             entries[1] = PieEntry(answer2)

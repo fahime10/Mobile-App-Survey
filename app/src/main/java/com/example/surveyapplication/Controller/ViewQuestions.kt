@@ -36,12 +36,12 @@ class ViewQuestions : AppCompatActivity() {
 
         answers = dbHelper.retrieveAllAnswers()
 
-        findViewById<RadioButton>(R.id.a1).text = answers[0].answerText
+        findViewById<RadioButton>(R.id.a1).text = answers[4].answerText
         findViewById<RadioButton>(R.id.a1).isChecked = true
-        findViewById<RadioButton>(R.id.a2).text = answers[1].answerText
+        findViewById<RadioButton>(R.id.a2).text = answers[3].answerText
         findViewById<RadioButton>(R.id.a3).text = answers[2].answerText
-        findViewById<RadioButton>(R.id.a4).text = answers[3].answerText
-        findViewById<RadioButton>(R.id.a5).text = answers[4].answerText
+        findViewById<RadioButton>(R.id.a4).text = answers[1].answerText
+        findViewById<RadioButton>(R.id.a5).text = answers[0].answerText
     }
 
     fun next(view: View) {
@@ -53,11 +53,11 @@ class ViewQuestions : AppCompatActivity() {
             }
 
             val answerId = when (answer.text.toString()) {
-                "Strongly agree" -> 1
-                "Agree" -> 2
+                "Strongly agree" -> 5
+                "Agree" -> 4
                 "Neither agree nor disagree" -> 3
-                "Disagree" -> 4
-                "Strongly disagree" -> 5
+                "Disagree" -> 2
+                "Strongly disagree" -> 1
                 else -> 0
             }
 

@@ -13,7 +13,7 @@ import kotlin.math.roundToInt
 
 class CustomAdapterStats(private val appContext: Context,
                          private val questionList: QuestionList,
-                            private val participants: Int) : BaseAdapter() {
+                         private val participants: Int) : BaseAdapter() {
 
     private var counter = 0
 
@@ -50,19 +50,19 @@ class CustomAdapterStats(private val appContext: Context,
             counter++
             questionCounter.text = counter.toString()
             saStat.text =
-                (db.surveyAnswers(questionList.getQuestionList()[position].id, 1) /
+                (db.surveyAnswers(questionList.getQuestionList()[position].id, 5) /
                         participants * 100).roundToInt().toString().plus("%")
 
-            aStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 2) /
+            aStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 4) /
                     participants * 100).roundToInt().toString().plus("%")
 
             nStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 3) /
                     participants * 100).roundToInt().toString().plus("%")
 
-            dStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 4) /
+            dStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 2) /
                     participants * 100).roundToInt().toString().plus("%")
 
-            sdStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 5) /
+            sdStat.text = (db.surveyAnswers(questionList.getQuestionList()[position].id, 1) /
                     participants * 100).roundToInt().toString().plus("%")
         }
 
