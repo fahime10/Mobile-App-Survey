@@ -203,7 +203,7 @@ class QuestionsChart : AppCompatActivity() {
     fun previousQuestionChart(view: View) {
         if (index > 0) {
             if (index < 9) {
-                findViewById<TextView>(R.id.backBtn).text = "Next"
+                findViewById<TextView>(R.id.backBtn).text = "Next Question"
             }
             index--
             findViewById<TextView>(R.id.questionStat).text = questionList[index].questionText
