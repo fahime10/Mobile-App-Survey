@@ -169,7 +169,7 @@ class UpdateSurvey : AppCompatActivity() {
                 findViewById<TextView>(R.id.questionCounter).text = questionCounter.toString()
                 findViewById<EditText>(R.id.newQuestion).text.clear()
 
-                if (questionCounter != 10) {
+                if (questionCounter != 11) {
                     findViewById<TextView>(R.id.questionText).text =
                         oldQuestions.getQuestion(index).questionText
                 }
@@ -193,6 +193,11 @@ class UpdateSurvey : AppCompatActivity() {
     fun previousQuestion(view: View) {
         if (questionCounter != 1) {
             questionList.removeLast()
+
+            if (index > 0) {
+                index--
+            }
+            findViewById<TextView>(R.id.questionText).text = oldQuestions.getQuestion(index).questionText
 
             questionCounter--
             findViewById<TextView>(R.id.questionCounter).text = questionCounter.toString()
